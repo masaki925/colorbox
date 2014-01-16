@@ -31,6 +31,7 @@
 		scrolling: true,
 		href: false,
 		title: false,
+		description: false,
 		rel: false,
 		opacity: 0.9,
 		preloading: true,
@@ -109,6 +110,7 @@
 	$loadingBay,
 	$loadingOverlay,
 	$title,
+	$description,
 	$current,
 	$slideshow,
 	$next,
@@ -216,6 +218,7 @@
 		settings.rel = settings.rel || element.rel || $(element).data('rel') || 'nofollow';
 		settings.href = settings.href || $(element).attr('href');
 		settings.title = settings.title || element.title;
+		settings.description = settings.description || $(element).data('description');
 		
 		if (typeof settings.href === "string") {
 			settings.href = $.trim(settings.href);
@@ -393,6 +396,8 @@
 				
 				$groupControls.add($title).hide();
 
+				$groupControls.add($description).hide();
+
 				$box.focus();
 				
 				if (settings.trapFocus) {
@@ -436,6 +441,7 @@
 			$wrap = $tag(div, "Wrapper");
 			$content = $tag(div, "Content").append(
 				$title = $tag(div, "Title"),
+				$description = $tag(div, "Description"),
 				$current = $tag(div, "Current"),
 				$prev = $('<button type="button"/>').attr({id:prefix+'Previous'}),
 				$next = $('<button type="button"/>').attr({id:prefix+'Next'}),
@@ -781,6 +787,7 @@
 
 			
 			$title.html(settings.title).add($loaded).show();
+			$description.html(settings.description).add($loaded).show();
 			
 			if (total > 1) { // handle grouping
 				if (typeof settings.current === "string") {
@@ -944,6 +951,7 @@
 			.addClass(prefix + 'Photo')
 			.bind('error',function () {
 				settings.title = false;
+				settings.description = false;
 				prep($tag(div, 'Error').html(settings.imgError));
 			})
 			.one('load', function () {
